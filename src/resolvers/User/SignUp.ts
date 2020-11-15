@@ -1,16 +1,11 @@
 import { hash } from "bcryptjs";
-import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 import { User } from "../../entity/User";
 import { Context } from "../Context";
 import { SignUpInput } from "./signUp/SignUpInput";
 
 @Resolver()
 export class SignUp {
-  @Query(() => String)
-  hello() {
-    return "hello world!";
-  }
-
   @Mutation(() => User)
   async signUp(
     @Arg("user") { email, password, firstName, lastName }: SignUpInput,
