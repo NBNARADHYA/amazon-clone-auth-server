@@ -1,6 +1,6 @@
 import { User } from "../../../entity/User";
-import { Context } from "src/resolvers/Context";
 import { MiddlewareFn } from "type-graphql";
+import { Context } from "../../Context";
 
 export const isEmailAlreadyExist: MiddlewareFn<Context> = async (
   { args: { email }, context: { dbConnection } },

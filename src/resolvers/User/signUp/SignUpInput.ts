@@ -1,7 +1,6 @@
 import { IsEmail } from "class-validator";
-import { User } from "src/entity/User";
 import { Field, InputType } from "type-graphql";
-
+import { User } from "../../../entity/User";
 @InputType()
 export class SignUpInput implements Partial<User> {
   @IsEmail()
