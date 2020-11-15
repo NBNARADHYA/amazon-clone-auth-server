@@ -12,7 +12,7 @@ refreshTokenRouter.post(
   async (req: Request, res: Response): Promise<Response> => {
     const dbConnection = getConnection();
 
-    const token = req.cookies.jid;
+    const token: string = req.cookies.jid;
 
     if (!token) {
       return res.send({ error: "TOKEN_REQUIRED", accessToken: null });
