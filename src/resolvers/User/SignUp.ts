@@ -1,15 +1,7 @@
 import { hash } from "bcryptjs";
-import {
-  Arg,
-  Ctx,
-  Mutation,
-  Query,
-  Resolver,
-  UseMiddleware,
-} from "type-graphql";
+import { Arg, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { User } from "../../entity/User";
 import { Context } from "../Context";
-import { isEmailAlreadyExist } from "./signUp/isEmailAlreadyExist";
 import { SignUpInput } from "./signUp/SignUpInput";
 
 @Resolver()
@@ -20,7 +12,6 @@ export class SignUp {
   }
 
   @Mutation(() => User)
-  @UseMiddleware(isEmailAlreadyExist)
   async signUp(
     @Arg("user") { email, password, firstName, lastName }: SignUpInput,
     @Ctx() { dbConnection }: Context

@@ -1,10 +1,12 @@
-import { IsEmail } from "class-validator";
+// import { IsEmail } from "class-validator";
 import { Field, InputType } from "type-graphql";
 import { User } from "../../../entity/User";
+import { IsEmailAlreadyExist } from "./isEmailAlreadyExist";
 @InputType()
 export class SignUpInput implements Partial<User> {
-  @IsEmail()
   @Field()
+  // @IsEmail()
+  @IsEmailAlreadyExist({ message: "EMAIL_ALREADY_IN_USE" })
   email: string;
 
   @Field()
