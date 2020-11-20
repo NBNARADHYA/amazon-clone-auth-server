@@ -1,8 +1,8 @@
 import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { Cart } from "../../entity/Cart";
 import { Context } from "../Context";
+import { ProductInput } from "../inputTypes/ProductInput";
 import { IsAuth } from "../middlewares/IsAuth";
-import { AddToCartInput } from "./addToCart/AddToCartInput";
 import { IsProductAlreadyExist } from "./addToCart/IsProductAlreadyExist";
 
 @Resolver()
@@ -10,7 +10,7 @@ export class AddToCart {
   @Mutation(() => Cart)
   @UseMiddleware(IsAuth, IsProductAlreadyExist)
   async addToCart(
-    @Arg("data") { productId, priceForOne, nos }: AddToCartInput,
+    @Arg("data") { productId, priceForOne, nos }: ProductInput,
     @Ctx() { req, dbConnection }: Context
   ): Promise<Cart> {
     const cart = new Cart();

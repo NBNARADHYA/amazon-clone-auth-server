@@ -5,7 +5,7 @@ import { IsAuth } from "../middlewares/IsAuth";
 
 @Resolver()
 export class FetchCart {
-  @Query(() => [Cart])
+  @Query(() => [Cart], { name: "cart" })
   @UseMiddleware(IsAuth)
   async fetchCart(@Ctx() { dbConnection, req }: Context): Promise<Array<Cart>> {
     return await dbConnection

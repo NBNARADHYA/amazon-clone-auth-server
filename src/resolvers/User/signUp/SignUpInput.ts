@@ -1,5 +1,5 @@
 // import { IsEmail } from "class-validator";
-import { Max, Min } from "class-validator";
+import { MaxLength, MinLength } from "class-validator";
 import { Field, InputType } from "type-graphql";
 import { User } from "../../../entity/User";
 import { IsEmailAlreadyExist } from "./isEmailAlreadyExist";
@@ -10,8 +10,8 @@ export class SignUpInput implements Partial<User> {
   @IsEmailAlreadyExist({ message: "EMAIL_ALREADY_IN_USE" })
   email: string;
 
-  @Min(5)
-  @Max(15)
+  @MinLength(5)
+  @MaxLength(15)
   @Field()
   password: string;
 

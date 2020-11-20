@@ -1,9 +1,8 @@
-import { Max, Min } from "class-validator";
+import { Min, Max } from "class-validator";
 import { Field, InputType, Int } from "type-graphql";
-import { Cart } from "../../../entity/Cart";
 
 @InputType()
-export class AddToCartInput implements Partial<Cart> {
+export class ProductInput {
   @Field()
   productId: string;
 

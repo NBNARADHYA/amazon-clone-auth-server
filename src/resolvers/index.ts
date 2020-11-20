@@ -4,6 +4,9 @@ import { Logout } from "./User/Logout";
 import { AddToCart } from "./Cart/AddToCart";
 import { FetchCart } from "./Cart/FetchCart";
 import { UpdateCart } from "./Cart/UpdateCart";
+import { CreateOrder } from "./Order/CreateOrder";
+import { FetchOrders } from "./Order/FetchOrders";
+import { CancelOrder } from "./Order/CancelOrder";
 
 export const resolvers: [Function, ...Function[]] = [
   Login,
@@ -12,4 +15,7 @@ export const resolvers: [Function, ...Function[]] = [
   AddToCart,
   FetchCart,
   UpdateCart,
+  CreateOrder,
+  FetchOrders,
+  CancelOrder,
 ];

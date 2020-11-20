@@ -1,5 +1,13 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Order } from "./Order";
 
 @ObjectType()
 @Entity()
@@ -10,6 +18,7 @@ export class User {
 
   @Field()
   @Column({ unique: true })
+  @PrimaryColumn()
   email: string;
 
   @Field()
@@ -22,4 +31,8 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Order, (order) => order.user)
+  @JoinColumn()
+  orders: Order[];
 }
