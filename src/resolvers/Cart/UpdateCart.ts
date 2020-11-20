@@ -9,7 +9,7 @@ export class UpdateCart {
   @Mutation(() => Boolean)
   @UseMiddleware(IsAuth)
   async updateCart(
-    @Arg("data") { productId, nos }: UpdateCartInput,
+    @Arg("cart") { productId, nos }: UpdateCartInput,
     @Ctx() { dbConnection, req }: Context
   ): Promise<boolean> {
     if (nos) {

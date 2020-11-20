@@ -1,13 +1,13 @@
 import { MiddlewareFn, NextFn } from "type-graphql";
 import { Order } from "../../../entity/Order";
 import { Context } from "../../Context";
-import { UpdateOrderInput } from "./UpdateOrderInput";
+import { UpdateOrderArgsType } from "./UpdateOrderArgs";
 
 export const IsProductExist: MiddlewareFn<Context> = async (
   { context: { dbConnection, req }, args },
   next
 ): Promise<NextFn> => {
-  const { productId, id } = args as UpdateOrderInput;
+  const { productId, id } = args as UpdateOrderArgsType;
 
   const order = await dbConnection
     .getRepository(Order)
@@ -20,7 +20,6 @@ export const IsProductExist: MiddlewareFn<Context> = async (
   if (!order) {
     throw new Error("INVALID_PRODUCT_ID");
   }
-  console.log(order);
   req.orderProductId = order.products[0].id;
 
   return next();

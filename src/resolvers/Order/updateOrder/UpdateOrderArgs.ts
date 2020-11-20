@@ -2,7 +2,7 @@ import { Min, Max } from "class-validator";
 import { ArgsType, Field, Int } from "type-graphql";
 
 @ArgsType()
-export class UpdateOrderInput {
+export class UpdateOrderArgsType {
   @Field()
   id: number;
 

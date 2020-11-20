@@ -2,13 +2,13 @@ import { hash } from "bcryptjs";
 import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 import { User } from "../../entity/User";
 import { Context } from "../Context";
-import { SignUpInput } from "./signUp/SignUpInput";
+import { SignUpInputType } from "./signUp/SignUpInput";
 
 @Resolver()
 export class SignUp {
   @Mutation(() => User)
   async signUp(
-    @Arg("user") { email, password, firstName, lastName }: SignUpInput,
+    @Arg("user") { email, password, firstName, lastName }: SignUpInputType,
     @Ctx() { dbConnection }: Context
   ): Promise<User> {
     const hashedPassword = await hash(password, 10);

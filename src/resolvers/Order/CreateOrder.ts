@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import { Args, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { Order } from "../../entity/Order";
 import { OrderContent } from "../../entity/OrderContent";
 import { Context } from "../Context";
@@ -10,7 +10,7 @@ export class CreateOrder {
   @Mutation(() => [OrderContent])
   @UseMiddleware(IsAuth)
   async createOrder(
-    @Arg("data") { products }: CreateOrderInput,
+    @Args() { products }: CreateOrderInput,
     @Ctx() { dbConnection, req }: Context
   ): Promise<OrderContent[]> {
     const order = new Order();

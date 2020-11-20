@@ -1,7 +1,7 @@
-import { Field, InputType } from "type-graphql";
+import { Field, ArgsType } from "type-graphql";
 import { ProductInput } from "../../inputTypes/ProductInput";
 
-@InputType()
+@ArgsType()
 export class CreateOrderInput {
   @Field(() => [ProductInput])
   products: ProductInput[];

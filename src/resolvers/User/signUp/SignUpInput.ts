@@ -4,7 +4,7 @@ import { Field, InputType } from "type-graphql";
 import { User } from "../../../entity/User";
 import { IsEmailAlreadyExist } from "./isEmailAlreadyExist";
 @InputType()
-export class SignUpInput implements Partial<User> {
+export class SignUpInputType implements Partial<User> {
   @Field()
   // @IsEmail()
   @IsEmailAlreadyExist({ message: "EMAIL_ALREADY_IN_USE" })

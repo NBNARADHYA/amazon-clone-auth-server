@@ -4,14 +4,14 @@ import { Context } from "../Context";
 import { IsAuth } from "../middlewares/IsAuth";
 import { IsOrderExist } from "./middlewares/IsOrderExist";
 import { IsProductExist } from "./updateOrder/IsProductExist";
-import { UpdateOrderInput } from "./updateOrder/UpdateOrderInput";
+import { UpdateOrderArgsType } from "./updateOrder/UpdateOrderArgs";
 
 @Resolver()
 export class UpdateOrder {
   @Mutation(() => Boolean)
   @UseMiddleware(IsAuth, IsOrderExist, IsProductExist)
   async updateOrder(
-    @Args() { nos }: UpdateOrderInput,
+    @Args() { nos }: UpdateOrderArgsType,
     @Ctx() { req, dbConnection }: Context
   ): Promise<boolean> {
     const orderContentRepo = dbConnection.getRepository(OrderContent);

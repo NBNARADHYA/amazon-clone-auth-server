@@ -1,18 +1,18 @@
 import { compare } from "bcryptjs";
-import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { Args, Ctx, Mutation, Resolver } from "type-graphql";
 import { User } from "../../entity/User";
 import { createAccessToken } from "../../utils/createAccessToken";
 import { createRefreshToken } from "../../utils/createRefreshToken";
 import { Payload } from "../../utils/Payload";
 import { Context } from "../Context";
-import { LoginInput } from "./login/LoginInput";
+import { LoginArgsType } from "./login/LoginArgs";
 import { LoginOutput } from "./login/LoginOutput";
 
 @Resolver()
 export class Login {
   @Mutation(() => LoginOutput)
   async login(
-    @Arg("login") { email, password }: LoginInput,
+    @Args() { email, password }: LoginArgsType,
     @Ctx() { dbConnection, res }: Context
   ): Promise<LoginOutput> {
     const user = await dbConnection

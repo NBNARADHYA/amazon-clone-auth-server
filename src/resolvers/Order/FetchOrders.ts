@@ -18,23 +18,21 @@ export class FetchOrders {
   async fetchOrderContents(
     @Root() { id }: Order,
     @Ctx() { dbConnection }: Context
-  ): Promise<OrderContent[] | undefined> {
+  ): Promise<OrderContent[]> {
     const order = await dbConnection
       .getRepository(Order)
       .findOne({ where: { id }, relations: ["products"] });
 
-    return order?.products;
+    return order!.products;
   }
 
   @Query(() => [Order], { name: "orders" })
   @UseMiddleware(IsAuth)
-  async fetchOrders(
-    @Ctx() { dbConnection, req }: Context
-  ): Promise<Order[] | undefined> {
+  async fetchOrders(@Ctx() { dbConnection, req }: Context): Promise<Order[]> {
     const user = await dbConnection
       .getRepository(User)
       .findOne({ where: { email: req.user.email }, relations: ["orders"] });
 
-    return user?.orders;
+    return user!.orders;
   }
 }
