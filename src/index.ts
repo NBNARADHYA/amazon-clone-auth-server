@@ -12,22 +12,26 @@ import { createApolloServer } from "./apolloServer";
 import { refreshTokenRouter } from "./routers/refreshToken";
 
 (async () => {
-  const dbConnection = await createConnection();
+  try {
+    const dbConnection = await createConnection();
 
-  const app = Express();
+    const app = Express();
 
-  app.use(cookieParser());
-  app.use("/refresh_token", refreshTokenRouter);
+    app.use(cookieParser());
+    app.use("/refresh_token", refreshTokenRouter);
 
-  const apolloServer = await createApolloServer(dbConnection);
+    const apolloServer = await createApolloServer(dbConnection);
 
-  apolloServer.applyMiddleware({ app });
+    apolloServer.applyMiddleware({ app });
 
-  const PORT = process.env.PORT || 5000;
+    const PORT = process.env.PORT || 5000;
 
-  app.listen(PORT, () =>
-    console.log(
-      `Server started at http://localhost:${PORT}${apolloServer.graphqlPath}`
-    )
-  );
+    app.listen(PORT, () =>
+      console.log(
+        `Server started at http://localhost:${PORT}${apolloServer.graphqlPath}`
+      )
+    );
+  } catch (error) {
+    throw new Error(error);
+  }
 })();

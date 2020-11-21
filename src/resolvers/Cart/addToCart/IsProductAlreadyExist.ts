@@ -6,7 +6,7 @@ export const IsProductAlreadyExist: MiddlewareFn<Context> = async (
   {
     context: { dbConnection, req },
     args: {
-      data: { productId },
+      cart: { productId },
     },
   },
   next
