@@ -17,13 +17,9 @@ export class FetchOrders {
   @FieldResolver(() => [OrderContent], { name: "products" })
   async fetchOrderContents(
     @Root() { id }: Order,
-    @Ctx() { dbConnection }: Context
+    @Ctx() { orderContentsLoader }: Context
   ): Promise<OrderContent[]> {
-    const order = await dbConnection
-      .getRepository(Order)
-      .findOne({ where: { id }, relations: ["products"] });
-
-    return order!.products;
+    return await orderContentsLoader.load(id);
   }
 
   @Query(() => [Order], { name: "orders" })
