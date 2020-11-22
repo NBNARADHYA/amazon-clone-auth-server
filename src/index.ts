@@ -1,7 +1,11 @@
-import { config } from "dotenv";
-const devEnvironment = config();
-if (devEnvironment.error) {
-  console.log(devEnvironment.error);
+try {
+  const { config } = require("dotenv");
+  const devEnvironment = config();
+  if (devEnvironment.error) {
+    console.error(devEnvironment.error);
+  }
+} catch (error) {
+  console.error(error);
 }
 
 import "reflect-metadata";
