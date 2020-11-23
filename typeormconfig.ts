@@ -8,6 +8,7 @@ let typeormConfig: ConnectionOptions = {
 };
 
 const nodeEnvironment = process.env.NODE_ENV;
+console.log(process.env.DATABASE_URL);
 
 if (nodeEnvironment === "production") {
   typeormConfig = {
