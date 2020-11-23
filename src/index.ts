@@ -12,7 +12,7 @@ import "reflect-metadata";
 import Express from "express";
 import { createConnection } from "typeorm";
 import cookieParser from "cookie-parser";
-import { createApolloServer } from "./apolloServer";
+import { createApolloServer } from "./utils/apolloServer";
 import { refreshTokenRouter } from "./routers/refreshToken";
 import { typeormConfig } from "../typeormconfig";
 
