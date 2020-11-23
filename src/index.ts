@@ -14,10 +14,11 @@ import { createConnection } from "typeorm";
 import cookieParser from "cookie-parser";
 import { createApolloServer } from "./apolloServer";
 import { refreshTokenRouter } from "./routers/refreshToken";
+import { typeormConfig } from "../typeormconfig";
 
 (async () => {
   try {
-    const dbConnection = await createConnection();
+    const dbConnection = await createConnection(typeormConfig);
 
     const app = Express();
 

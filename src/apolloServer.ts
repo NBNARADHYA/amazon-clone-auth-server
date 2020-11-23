@@ -8,7 +8,7 @@ export const createApolloServer = async (
   dbConnection: Connection
 ): Promise<ApolloServer> => {
   const schema = await buildSchema({
-    resolvers: [__dirname + "/resolvers/*/*.ts"],
+    resolvers: [__dirname + "/resolvers/*/*.*"],
   });
 
   return new ApolloServer({

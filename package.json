@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.ts",
-    "build": "tsc",
-    "db:build": "tsc ormconfig.ts --outDir ./dist"
+    "build": "tsc -b"
   },
   "keywords": [],
   "author": "",
