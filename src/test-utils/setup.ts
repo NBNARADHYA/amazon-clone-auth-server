@@ -1,12 +1,11 @@
-if (process.env.NODE_ENV !== "test") {
-  process.exit(0);
-}
-import { config } from "dotenv";
 import { Connection } from "typeorm";
 
-const devEnvironment = config();
-if (devEnvironment.error) {
-  console.error(devEnvironment.error);
+if (process.env.NODE_ENV === "test") {
+  const { config } = require("dotenv");
+  const devEnvironment = config();
+  if (devEnvironment.error) {
+    console.error(devEnvironment.error);
+  }
 }
 
 import { createTestConnection } from "./testConnection";

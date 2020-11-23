@@ -1,0 +1,32 @@
+orbs:
+  node: circleci/node@4.1.0
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:15.2.1
+      - image: circleci/postgres:latest
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: amazonCloneAuthTest
+    steps:
+      - checkout
+
+      - node/install
+
+      - run: node --version
+
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+          override-ci-command: npm install
+
+      # - run: npm install
+
+      - run: npm run ci:test
+
+workflows:
+  build:
+    jobs:
+      - build
