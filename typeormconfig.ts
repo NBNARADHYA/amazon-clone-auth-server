@@ -7,7 +7,7 @@ export const typeormConfig: ConnectionOptions = {
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  synchronize: true,
-  logging: true,
+  synchronize: process.env.NODE_ENV === "development",
+  logging: process.env.NODE_ENV === "development",
   entities: ["./src/entity/*.*"],
 };

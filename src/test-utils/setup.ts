@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "test") {
+  process.exit(0);
+}
 import { config } from "dotenv";
 import { Connection } from "typeorm";
 
@@ -8,4 +11,4 @@ if (devEnvironment.error) {
 
 import { createTestConnection } from "./testConnection";
 
-export const setUpTest = (): Promise<Connection> => createTestConnection(true);
+export const setUpTest = (): Promise<Connection> => createTestConnection();

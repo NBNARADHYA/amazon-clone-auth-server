@@ -1,8 +1,6 @@
 import { Connection, ConnectionOptions, createConnection } from "typeorm";
 
-export const createTestConnection = (
-  drop: boolean = false
-): Promise<Connection> => {
+export const createTestConnection = (): Promise<Connection> => {
   return createConnection({
     type: "postgres",
     host: process.env.DB_HOST_TEST,
@@ -10,8 +8,8 @@ export const createTestConnection = (
     username: process.env.DB_USER_TEST,
     password: process.env.DB_PASS_TEST,
     database: process.env.DB_NAME_TEST,
-    synchronize: drop,
-    dropSchema: drop,
+    synchronize: process.env.NODE_ENV === "test",
+    dropSchema: process.env.NODE_ENV === "test",
     entities: ["./src/entity/*.*"],
   } as ConnectionOptions);
 };

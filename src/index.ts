@@ -1,11 +1,9 @@
-try {
+if (process.env.NODE_ENV === "development") {
   const { config } = require("dotenv");
   const devEnvironment = config();
   if (devEnvironment.error) {
     console.error(devEnvironment.error);
   }
-} catch (error) {
-  console.error(error);
 }
 
 import "reflect-metadata";
