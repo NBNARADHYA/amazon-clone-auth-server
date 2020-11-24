@@ -1,6 +1,10 @@
+import { compare } from "bcryptjs";
+import { GraphQLError } from "graphql";
 import { Connection } from "typeorm";
+import { User } from "../../entity/User";
 import { makeGraphQLQuery } from "../../test-utils/graphQLQuery";
 import { setUpTest } from "../../test-utils/setup";
+import { generateFakeUser } from "../../test-utils/user/fakeUser";
 
 let testDbConnection: Connection;
 
@@ -23,16 +27,132 @@ describe("Test signUp mutation", () => {
       }
     }
   `;
-  it("signup", async () => {
+  it("SignUp with missing required fields", async () => {
     const result = await makeGraphQLQuery({
       source: signUpMutation,
       variableValues: {
-        user: { password: "nbnaradhya", email: "nb55n", firstName: "nikhil" },
+        user: { password: "adfsfghgb", firstName: "bgbgbggnh" },
       },
       contextValue: {
         dbConnection: testDbConnection,
       },
     });
-    console.log(result);
+    expect(result).toMatchObject({
+      errors: expect.arrayContaining([expect.any(GraphQLError)]),
+    });
+  });
+
+  it("SignUp with invalid email", async () => {
+    const result = await makeGraphQLQuery({
+      source: signUpMutation,
+      variableValues: {
+        user: { password: "assaasda", email: "asidfn", firstName: "adsfad" },
+      },
+      contextValue: {
+        dbConnection: testDbConnection,
+      },
+    });
+    expect(result).toMatchObject({
+      errors: [
+        expect.objectContaining({
+          message: "Argument Validation Error",
+          locations: expect.any(Array),
+          path: ["signUp"],
+        }),
+      ],
+    });
+  });
+
+  it("SignUp with invalid password", async () => {
+    const result = await makeGraphQLQuery({
+      source: signUpMutation,
+      variableValues: {
+        user: { password: "adf", email: "abc@a.com", firstName: "bgbgbggnh" },
+      },
+      contextValue: {
+        dbConnection: testDbConnection,
+      },
+    });
+    expect(result).toMatchObject({
+      errors: [
+        expect.objectContaining({
+          message: "Argument Validation Error",
+          locations: expect.any(Array),
+          path: ["signUp"],
+        }),
+      ],
+    });
+  });
+
+  it("SignUp with an existing email", async () => {
+    const user = generateFakeUser();
+
+    await makeGraphQLQuery({
+      source: signUpMutation,
+      variableValues: {
+        user,
+      },
+      contextValue: {
+        dbConnection: testDbConnection,
+      },
+    });
+
+    const result = await makeGraphQLQuery({
+      source: signUpMutation,
+      variableValues: {
+        user,
+      },
+      contextValue: {
+        dbConnection: testDbConnection,
+      },
+    });
+
+    expect(result).toMatchObject({
+      errors: [
+        expect.objectContaining({
+          message: "Argument Validation Error",
+          locations: expect.any(Array),
+          path: ["signUp"],
+        }),
+      ],
+    });
+  });
+
+  it("SignUp with all valid fields", async () => {
+    const user = generateFakeUser();
+    let result: any = await makeGraphQLQuery({
+      source: signUpMutation,
+      variableValues: {
+        user,
+      },
+      contextValue: {
+        dbConnection: testDbConnection,
+      },
+    });
+
+    const { password, ...rest } = user;
+    expect(result).toMatchObject({
+      data: {
+        signUp: {
+          ...rest,
+          id: expect.any(String),
+        },
+      },
+    });
+
+    result = await testDbConnection
+      .getRepository(User)
+      .findOne({ where: { email: user.email } });
+
+    expect(result).toMatchObject(expect.any(User));
+    expect(result).toMatchObject({
+      ...rest,
+      id: expect.any(Number),
+      password: expect.any(String),
+    });
+
+    const valid = await compare(password!, result.password);
+
+    expect(valid).toBe(true);
   });
 });
