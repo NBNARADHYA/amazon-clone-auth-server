@@ -5,6 +5,7 @@ import { makeGraphQLQuery } from "../../test-utils/graphQLQuery";
 import { setUpTest } from "../../test-utils/setup";
 import { signUpFakeUser } from "../../test-utils/user/fakeUser";
 import faker from "faker";
+import { Payload } from "../../types/Payload";
 
 let testDbConnection: Connection;
 
@@ -130,6 +131,8 @@ describe("Test login mutation", () => {
 
     const { password, ...rest } = user;
 
+    expect.assertions(7);
+
     expect(result).toMatchObject({
       data: {
         login: {
@@ -150,11 +153,22 @@ describe("Test login mutation", () => {
     const accessToken: string = result.data!.login.accessToken;
     const refreshToken: string = expressCokkieMockCalls[0][1];
 
-    expect(verify(accessToken, process.env.ACCESS_TOKEN_SECRET!)).toMatchObject(
-      rest
-    );
-    expect(
-      verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!)
-    ).toMatchObject(rest);
+    let payload: Payload;
+
+    try {
+      payload = verify(
+        accessToken,
+        process.env.ACCESS_TOKEN_SECRET!
+      ) as Payload;
+      expect(payload).toMatchObject(rest);
+
+      payload = verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET!
+      ) as Payload;
+      expect(payload).toMatchObject(rest);
+    } catch (error) {
+      throw new Error(error);
+    }
   });
 });
