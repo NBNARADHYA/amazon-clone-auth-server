@@ -1,0 +1,63 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.1.0
+  heroku: circleci/heroku@1.2.3
+
+jobs:
+  test:
+    docker:
+      - image: cimg/node:15.2.1
+      - image: circleci/postgres:latest
+
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: amazonCloneAuthTest
+
+    steps:
+      - checkout
+
+      - node/install
+
+      - run: node --version
+
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+          override-ci-command: npm install
+
+      - run:
+          name: Run tests
+
+          command: npm run ci:test
+
+  deploy:
+    executor: heroku/default
+
+    steps:
+      - checkout
+
+      - heroku/install
+
+      - setup_remote_docker:
+          version: 19.03.13
+
+      - run:
+          name: Pushing to heroku registry
+
+          command: |
+            heroku container:login
+            heroku container:push web --arg NODE_ENV=production -a $HEROKU_APP_NAME
+            heroku container:release web -a $HEROKU_APP_NAME
+
+workflows:
+  build:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master

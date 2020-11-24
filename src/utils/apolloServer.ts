@@ -1,15 +1,13 @@
 import { ApolloServer } from "apollo-server-express";
-import { buildSchema } from "type-graphql";
 import { Connection } from "typeorm";
-import { orderContentsLoader } from "./loaders/orderContentsLoader";
-import { Context } from "./resolvers/Context";
+import { orderContentsLoader } from "../loaders/orderContentsLoader";
+import { Context } from "../types/Context";
+import { buildGraphQLSchema } from "./buildGqlSchema";
 
 export const createApolloServer = async (
   dbConnection: Connection
 ): Promise<ApolloServer> => {
-  const schema = await buildSchema({
-    resolvers: [__dirname + "/resolvers/*/*.ts"],
-  });
+  const schema = await buildGraphQLSchema();
 
   return new ApolloServer({
     schema,

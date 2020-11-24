@@ -9,7 +9,7 @@ import {
 import { Order } from "../../entity/Order";
 import { OrderContent } from "../../entity/OrderContent";
 import { User } from "../../entity/User";
-import { Context } from "../Context";
+import { Context } from "../../types/Context";
 import { IsAuth } from "../middlewares/IsAuth";
 
 @Resolver(Order)

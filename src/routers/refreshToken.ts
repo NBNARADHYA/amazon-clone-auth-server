@@ -2,7 +2,7 @@ import { verify } from "jsonwebtoken";
 import { Router, Request, Response } from "express";
 import { User } from "../entity/User";
 import { createAccessToken } from "../utils/createAccessToken";
-import { Payload } from "../utils/Payload";
+import { Payload } from "../types/Payload";
 import { getConnection } from "typeorm";
 
 const refreshTokenRouter = Router();

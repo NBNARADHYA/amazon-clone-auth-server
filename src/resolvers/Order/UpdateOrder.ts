@@ -1,6 +1,6 @@
 import { Args, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { OrderContent } from "../../entity/OrderContent";
-import { Context } from "../Context";
+import { Context } from "../../types/Context";
 import { IsAuth } from "../middlewares/IsAuth";
 import { IsOrderExist } from "./middlewares/IsOrderExist";
 import { IsProductExist } from "./updateOrder/IsProductExist";

@@ -1,6 +1,6 @@
 import { MiddlewareFn, NextFn } from "type-graphql";
 import { Cart } from "../../../entity/Cart";
-import { Context } from "../../Context";
+import { Context } from "../../../types/Context";
 
 export const IsProductAlreadyExist: MiddlewareFn<Context> = async (
   {

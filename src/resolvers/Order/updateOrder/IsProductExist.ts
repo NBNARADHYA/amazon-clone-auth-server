@@ -1,6 +1,6 @@
 import { MiddlewareFn, NextFn } from "type-graphql";
 import { Order } from "../../../entity/Order";
-import { Context } from "../../Context";
+import { Context } from "../../../types/Context";
 import { UpdateOrderArgsType } from "./UpdateOrderArgs";
 
 export const IsProductExist: MiddlewareFn<Context> = async (

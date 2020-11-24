@@ -3,8 +3,8 @@ import { Args, Ctx, Mutation, Resolver } from "type-graphql";
 import { User } from "../../entity/User";
 import { createAccessToken } from "../../utils/createAccessToken";
 import { createRefreshToken } from "../../utils/createRefreshToken";
-import { Payload } from "../../utils/Payload";
-import { Context } from "../Context";
+import { Payload } from "../../types/Payload";
+import { Context } from "../../types/Context";
 import { LoginArgsType } from "./login/LoginArgs";
 import { LoginOutput } from "./login/LoginOutput";
 

@@ -1,7 +1,7 @@
 import { hash } from "bcryptjs";
 import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 import { User } from "../../entity/User";
-import { Context } from "../Context";
+import { Context } from "../../types/Context";
 import { SignUpInputType } from "./signUp/SignUpInput";
 
 @Resolver()

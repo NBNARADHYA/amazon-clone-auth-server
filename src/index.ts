@@ -1,19 +1,22 @@
-import { config } from "dotenv";
-const devEnvironment = config();
-if (devEnvironment.error) {
-  console.log(devEnvironment.error);
+if (process.env.NODE_ENV === "development") {
+  const { config } = require("dotenv");
+  const devEnvironment = config();
+  if (devEnvironment.error) {
+    console.error(devEnvironment.error);
+  }
 }
 
 import "reflect-metadata";
 import Express from "express";
 import { createConnection } from "typeorm";
 import cookieParser from "cookie-parser";
-import { createApolloServer } from "./apolloServer";
+import { createApolloServer } from "./utils/apolloServer";
 import { refreshTokenRouter } from "./routers/refreshToken";
+import { typeormConfig } from "../typeormconfig";
 
 (async () => {
   try {
-    const dbConnection = await createConnection();
+    const dbConnection = await createConnection(typeormConfig);
 
     const app = Express();
 

@@ -1,7 +1,7 @@
 import { Args, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { Order } from "../../entity/Order";
 import { OrderContent } from "../../entity/OrderContent";
-import { Context } from "../Context";
+import { Context } from "../../types/Context";
 import { IsAuth } from "../middlewares/IsAuth";
 import { CreateOrderInput } from "./createOrder/CreateOrderInput";
 
