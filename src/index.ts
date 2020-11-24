@@ -13,6 +13,7 @@ import cookieParser from "cookie-parser";
 import { createApolloServer } from "./utils/apolloServer";
 import { refreshTokenRouter } from "./routers/refreshToken";
 import { typeormConfig } from "../typeormconfig";
+import cors from "cors";
 
 (async () => {
   try {
@@ -20,12 +21,17 @@ import { typeormConfig } from "../typeormconfig";
 
     const app = Express();
 
+    app.use(
+      cors({
+        credentials: true,
+      })
+    );
     app.use(cookieParser());
     app.use("/refresh_token", refreshTokenRouter);
 
     const apolloServer = await createApolloServer(dbConnection);
 
-    apolloServer.applyMiddleware({ app });
+    apolloServer.applyMiddleware({ app, cors: false });
 
     const PORT = process.env.PORT || 5000;
 
