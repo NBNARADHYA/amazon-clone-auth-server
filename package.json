@@ -6,8 +6,8 @@
   "scripts": {
     "dev:start": "cross-env NODE_ENV=development nodemon src/index.ts",
     "build": "tsc -b",
-    "test": "cross-env NODE_ENV=test jest --forceExit",
-    "ci:test": "cross-env NODE_ENV=citest jest"
+    "test": "cross-env NODE_ENV=test jest",
+    "ci:test": "cross-env NODE_ENV=citest jest --ci --detectOpenHandles --forceExit"
   },
   "keywords": [],
   "author": "",

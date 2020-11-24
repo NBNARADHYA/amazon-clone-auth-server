@@ -1,6 +1,6 @@
 import { MiddlewareFn, NextFn } from "type-graphql";
 import { User } from "../../../entity/User";
-import { Context } from "../../Context";
+import { Context } from "../../../types/Context";
 
 export const IsOrderExist: MiddlewareFn<Context> = async (
   { context: { dbConnection, req }, args },

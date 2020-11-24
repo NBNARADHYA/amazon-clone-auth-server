@@ -26,7 +26,10 @@ jobs:
           cache-path: ~/project/node_modules
           override-ci-command: npm install
 
-      - run: npm run ci:test
+      - run:
+          name: Run tests
+
+          command: npm run ci:test
 
   deploy:
     executor: heroku/default
@@ -38,6 +41,7 @@ jobs:
 
       - setup_remote_docker:
           version: 19.03.13
+          docker_layer_caching: true
 
       - run:
           name: Pushing to heroku registry
@@ -48,9 +52,13 @@ jobs:
             heroku container:release web -a $HEROKU_APP_NAME
 
 workflows:
-  deploy:
+  build:
     jobs:
       - test
       - deploy:
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - master

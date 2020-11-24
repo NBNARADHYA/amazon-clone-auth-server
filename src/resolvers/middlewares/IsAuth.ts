@@ -2,7 +2,7 @@ import { verify } from "jsonwebtoken";
 import { MiddlewareFn, NextFn } from "type-graphql";
 import { User } from "../../entity/User";
 import { Payload } from "../../types/Payload";
-import { Context } from "../Context";
+import { Context } from "../../types/Context";
 
 export const IsAuth: MiddlewareFn<Context> = async (
   { context: { dbConnection, req } },

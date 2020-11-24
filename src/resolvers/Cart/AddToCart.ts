@@ -1,6 +1,6 @@
 import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { Cart } from "../../entity/Cart";
-import { Context } from "../Context";
+import { Context } from "../../types/Context";
 import { ProductInput } from "../inputTypes/ProductInput";
 import { IsAuth } from "../middlewares/IsAuth";
 import { IsProductAlreadyExist } from "./addToCart/IsProductAlreadyExist";

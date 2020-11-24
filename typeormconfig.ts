@@ -7,10 +7,7 @@ let typeormConfig: ConnectionOptions = {
   entities: ["./src/entity/*.*"],
 };
 
-const nodeEnvironment = process.env.NODE_ENV;
-console.log(process.env.DATABASE_URL);
-
-if (nodeEnvironment === "production") {
+if (process.env.NODE_ENV === "production") {
   typeormConfig = {
     ...typeormConfig,
     url: process.env.DATABASE_URL,
