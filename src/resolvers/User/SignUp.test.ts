@@ -4,7 +4,10 @@ import { Connection } from "typeorm";
 import { User } from "../../entity/User";
 import { makeGraphQLQuery } from "../../test-utils/graphQLQuery";
 import { setUpTest } from "../../test-utils/setup";
-import { generateFakeUser } from "../../test-utils/user/fakeUser";
+import {
+  generateFakeUser,
+  signUpFakeUser,
+} from "../../test-utils/user/fakeUser";
 
 let testDbConnection: Connection;
 
@@ -85,17 +88,7 @@ describe("Test signUp mutation", () => {
   });
 
   it("SignUp with an existing email", async () => {
-    const user = generateFakeUser();
-
-    await makeGraphQLQuery({
-      source: signUpMutation,
-      variableValues: {
-        user,
-      },
-      contextValue: {
-        dbConnection: testDbConnection,
-      },
-    });
+    const user = await signUpFakeUser(testDbConnection);
 
     const result = await makeGraphQLQuery({
       source: signUpMutation,
