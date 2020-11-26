@@ -1,16 +1,28 @@
-import { Arg, Ctx, Query, Resolver } from "type-graphql";
+import { Args, Ctx, Query, Resolver } from "type-graphql";
 import { Product } from "../../entity/Product";
 import { Context } from "../../types/Context";
+import { FetchProductsInput } from "./fetchProducts/FetchProductsInput";
+import { FetchProductsOutput } from "./fetchProducts/FetchProductsOutput";
 
 @Resolver()
 export class FetchProducts {
-  @Query(() => [Product], { name: "products" })
+  @Query(() => FetchProductsOutput, { name: "products" })
   async fetchProducts(
-    @Arg("category") category: string,
+    @Args() { category, order, skip, take }: FetchProductsInput,
     @Ctx() { dbConnection }: Context
-  ): Promise<Product[]> {
-    return await dbConnection
+  ): Promise<FetchProductsOutput> {
+    const [products, count] = await dbConnection
       .getRepository(Product)
-      .find({ where: { category } });
+      .findAndCount({
+        where: { category },
+        skip,
+        take,
+        order: { price: order },
+      });
+
+    return {
+      count,
+      products,
+    };
   }
 }
