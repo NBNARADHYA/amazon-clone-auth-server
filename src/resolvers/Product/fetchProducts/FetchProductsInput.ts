@@ -1,25 +1,16 @@
-import { Field, ArgsType, registerEnumType } from "type-graphql";
-
-enum OrderEnum {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
-registerEnumType(OrderEnum, {
-  name: "OrderEnum",
-});
+import { Field, ArgsType, Int } from "type-graphql";
 
 @ArgsType()
 export class FetchProductsInput {
   @Field()
   category: string;
 
-  @Field(() => OrderEnum, { nullable: true, defaultValue: undefined })
-  order: "ASC" | "DESC" | undefined;
+  @Field(() => Int, { nullable: true })
+  order: number;
 
-  @Field()
+  @Field(() => Int)
   skip: number;
 
-  @Field()
+  @Field(() => Int)
   take: number;
 }

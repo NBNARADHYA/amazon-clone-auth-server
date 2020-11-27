@@ -11,14 +11,16 @@ export class FetchProducts {
     @Args() { category, order, skip, take }: FetchProductsInput,
     @Ctx() { dbConnection }: Context
   ): Promise<FetchProductsOutput> {
+    const orderBy = order === 1 ? "ASC" : order === -1 ? "DESC" : undefined;
+
     const [products, count] = await dbConnection
       .getRepository(Product)
-      .findAndCount({
-        where: { category },
-        skip,
-        take,
-        order: { price: order },
-      });
+      .createQueryBuilder("product")
+      .where("product.category = :category", { category })
+      .orderBy("cast(price as double precision)", orderBy)
+      .skip(skip)
+      .take(take)
+      .getManyAndCount();
 
     return {
       count,
