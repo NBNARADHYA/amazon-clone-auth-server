@@ -9,6 +9,7 @@ import { FetchOrders } from "./Order/FetchOrders";
 import { CancelOrder } from "./Order/CancelOrder";
 import { UpdateOrder } from "./Order/UpdateOrder";
 import { FetchProducts } from "./Product/FetchProducts";
+import { FetchProduct } from "./Product/FetchProduct";
 
 export const resolvers: [Function, ...Function[]] = [
   Login,
@@ -22,4 +23,5 @@ export const resolvers: [Function, ...Function[]] = [
   CancelOrder,
   UpdateOrder,
   FetchProducts,
+  FetchProduct,
 ];
