@@ -13,4 +13,7 @@ export class FetchProductsInput {
 
   @Field(() => Int)
   take: number;
+
+  @Field({ nullable: true })
+  search: string;
 }
