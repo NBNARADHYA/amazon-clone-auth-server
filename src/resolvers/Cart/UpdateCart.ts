@@ -15,11 +15,11 @@ export class UpdateCart {
     if (nos) {
       await dbConnection
         .getRepository(Cart)
-        .update({ email: req.user.email, productId }, { nos });
+        .update({ email: req.user.email, product: productId }, { nos });
     } else {
       await dbConnection
         .getRepository(Cart)
-        .delete({ email: req.user.email, productId });
+        .delete({ email: req.user.email, product: productId });
     }
 
     return true;

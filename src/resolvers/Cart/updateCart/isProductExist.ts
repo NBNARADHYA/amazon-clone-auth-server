@@ -14,7 +14,7 @@ export class IsProductExistConstraint implements ValidatorConstraintInterface {
 
     return dbConnection
       .getRepository(Cart)
-      .findOne({ where: { productId } })
+      .findOne({ where: { product: productId } })
       .then((cart): boolean => !!cart);
   }
 }

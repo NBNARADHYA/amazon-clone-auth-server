@@ -38,7 +38,11 @@ export class Login {
 
     const refreshToken = createRefreshToken(payload);
 
-    res.cookie("jid", refreshToken, { httpOnly: true });
+    res.cookie("jid", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      path: "/refresh_token",
+    });
 
     return {
       email,

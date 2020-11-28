@@ -15,7 +15,7 @@ export class AddToCart {
   ): Promise<Cart> {
     const cart = new Cart();
     cart.email = req.user.email;
-    cart.productId = productId;
+    cart.product = productId;
     cart.priceForOne = priceForOne;
     cart.nos = nos;
 

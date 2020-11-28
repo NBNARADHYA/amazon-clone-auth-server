@@ -11,6 +11,6 @@ export class ProductInput {
   @Max(5)
   nos: number;
 
-  @Field(() => Int)
-  priceForOne: number;
+  @Field()
+  priceForOne: string;
 }

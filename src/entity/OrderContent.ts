@@ -21,9 +21,9 @@ export class OrderContent {
   @PrimaryColumn()
   productId: string;
 
-  @Field(() => Int)
+  @Field()
   @Column()
-  priceForOne: number;
+  priceForOne: string;
 
   @Field(() => Int)
   @Column()
