@@ -15,7 +15,7 @@ export const IsOrderExist: MiddlewareFn<Context> = async (
     .getOne();
 
   if (!user) {
-    throw new Error("INVALID_ORDER_ID");
+    throw new Error("Invalid Order ID");
   }
 
   return next();

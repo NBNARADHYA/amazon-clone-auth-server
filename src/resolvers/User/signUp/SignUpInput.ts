@@ -7,7 +7,7 @@ import { IsEmailAlreadyExist } from "./isEmailAlreadyExist";
 export class SignUpInputType implements Partial<User> {
   @Field()
   @IsEmail()
-  @IsEmailAlreadyExist({ message: "EMAIL_ALREADY_IN_USE" })
+  @IsEmailAlreadyExist({ message: "Email already in use" })
   email: string;
 
   @MinLength(5)

@@ -20,13 +20,13 @@ export class Login {
       .findOne({ where: { email } });
 
     if (!user) {
-      throw new Error("INVALID_USER");
+      throw new Error("Invalid Password");
     }
 
     const valid = await compare(password, user.password);
 
     if (!valid) {
-      throw new Error("INVALID_PASSWORD");
+      throw new Error("Invalid Password");
     }
     const payload: Payload = {
       email,
