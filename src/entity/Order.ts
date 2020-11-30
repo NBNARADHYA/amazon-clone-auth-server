@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import {
+  Column,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -15,6 +16,26 @@ export class Order {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Field()
+  @Column({ type: "text" })
+  address: string;
+
+  @Field()
+  @Column()
+  country: string;
+
+  @Field()
+  @Column()
+  state: string;
+
+  @Field()
+  @Column()
+  pincode: string;
+
+  @Field()
+  @Column()
+  city: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ referencedColumnName: "email" })

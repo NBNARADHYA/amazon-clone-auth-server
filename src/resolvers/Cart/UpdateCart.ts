@@ -9,17 +9,17 @@ export class UpdateCart {
   @Mutation(() => Boolean)
   @UseMiddleware(IsAuth)
   async updateCart(
-    @Arg("cart") { productId, nos }: UpdateCartInput,
+    @Arg("cart") { product, nos }: UpdateCartInput,
     @Ctx() { dbConnection, req }: Context
   ): Promise<boolean> {
     if (nos) {
       await dbConnection
         .getRepository(Cart)
-        .update({ email: req.user.email, product: productId }, { nos });
+        .update({ email: req.user.email, product }, { nos });
     } else {
       await dbConnection
         .getRepository(Cart)
-        .delete({ email: req.user.email, product: productId });
+        .delete({ email: req.user.email, product });
     }
 
     return true;

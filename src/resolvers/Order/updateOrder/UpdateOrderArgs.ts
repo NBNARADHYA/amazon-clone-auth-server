@@ -3,7 +3,7 @@ import { ArgsType, Field, Int } from "type-graphql";
 
 @ArgsType()
 export class UpdateOrderArgsType {
-  @Field()
+  @Field(() => Int)
   id: number;
 
   @Field(() => Int)
@@ -12,5 +12,5 @@ export class UpdateOrderArgsType {
   nos: number;
 
   @Field()
-  productId: string;
+  product: string;
 }

@@ -7,14 +7,14 @@ export const IsProductExist: MiddlewareFn<Context> = async (
   { context: { dbConnection, req }, args },
   next
 ): Promise<NextFn> => {
-  const { productId, id } = args as UpdateOrderArgsType;
+  const { product, id } = args as UpdateOrderArgsType;
 
   const order = await dbConnection
     .getRepository(Order)
     .createQueryBuilder("order")
     .innerJoinAndSelect("order.products", "products")
     .where("order.id = :id", { id })
-    .andWhere("products.productId = :productId", { productId })
+    .andWhere("products.productId = :product", { product })
     .getOne();
 
   if (!order) {

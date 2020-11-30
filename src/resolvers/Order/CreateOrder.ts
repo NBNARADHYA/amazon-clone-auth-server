@@ -1,4 +1,5 @@
-import { Args, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import { Cart } from "../../entity/Cart";
 import { Order } from "../../entity/Order";
 import { OrderContent } from "../../entity/OrderContent";
 import { Context } from "../../types/Context";
@@ -7,27 +8,45 @@ import { CreateOrderInput } from "./createOrder/CreateOrderInput";
 
 @Resolver()
 export class CreateOrder {
-  @Mutation(() => [OrderContent])
+  @Mutation(() => Boolean)
   @UseMiddleware(IsAuth)
   async createOrder(
-    @Args() { products }: CreateOrderInput,
+    @Arg("data")
+    {
+      products,
+      checkout,
+      address,
+      country,
+      pincode,
+      state,
+      city,
+    }: CreateOrderInput,
     @Ctx() { dbConnection, req }: Context
-  ): Promise<OrderContent[]> {
+  ): Promise<boolean> {
     const order = new Order();
     order.user = req.user;
+    order.address = address;
+    order.country = country;
+    order.pincode = pincode;
+    order.city = city;
+    order.state = state;
 
     await dbConnection.getRepository(Order).insert(order);
 
     const orderContents = products.map(
-      (product): OrderContent => {
+      ({ product, nos, priceForOne }): OrderContent => {
         const newProduct = new OrderContent();
-        newProduct.productId = product.productId;
-        newProduct.nos = product.nos;
-        newProduct.priceForOne = product.priceForOne;
+        newProduct.productId = product;
+        newProduct.nos = nos;
+        newProduct.priceForOne = priceForOne;
         newProduct.order = order;
         return newProduct;
       }
     );
+
+    if (checkout) {
+      await dbConnection.getRepository(Cart).delete({ email: req.user.email });
+    }
 
     try {
       await dbConnection.getRepository(OrderContent).insert(orderContents);
@@ -35,6 +54,6 @@ export class CreateOrder {
       throw new Error(error);
     }
 
-    return orderContents;
+    return true;
   }
 }

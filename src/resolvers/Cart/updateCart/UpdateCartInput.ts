@@ -7,7 +7,7 @@ import { IsProductExist } from "./isProductExist";
 export class UpdateCartInput implements Partial<Cart> {
   @Field()
   @IsProductExist({ message: "Invalid Product ID" })
-  productId: string;
+  product: string;
 
   @Field(() => Int)
   @Min(0)

@@ -4,7 +4,7 @@ import { Field, InputType, Int } from "type-graphql";
 @InputType()
 export class ProductInput {
   @Field()
-  productId: string;
+  product: string;
 
   @Field(() => Int, { nullable: true, defaultValue: 1 })
   @Min(1)

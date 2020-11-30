@@ -20,7 +20,7 @@ export class Login {
       .findOne({ where: { email } });
 
     if (!user) {
-      throw new Error("Invalid Password");
+      throw new Error("Invalid User");
     }
 
     const valid = await compare(password, user.password);

@@ -9,12 +9,12 @@ import { Cart } from "../../../entity/Cart";
 
 @ValidatorConstraint({ async: true })
 export class IsProductExistConstraint implements ValidatorConstraintInterface {
-  validate(productId: string): Promise<boolean> {
+  validate(product: string): Promise<boolean> {
     const dbConnection = getConnection();
 
     return dbConnection
       .getRepository(Cart)
-      .findOne({ where: { product: productId } })
+      .findOne({ where: { product } })
       .then((cart): boolean => !!cart);
   }
 }
