@@ -40,7 +40,6 @@ export class Login {
 
     res.cookie("jid", refreshToken, {
       httpOnly: true,
-      secure: true,
       path: "/refresh_token",
     });
 

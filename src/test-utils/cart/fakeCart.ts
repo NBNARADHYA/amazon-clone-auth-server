@@ -6,9 +6,8 @@ import { makeGraphQLQuery } from "../graphQLQuery";
 export interface FakeCart extends Partial<Cart> {}
 
 export const generateFakeCart = (): FakeCart => ({
-  productId: faker.commerce.product(),
+  product: faker.commerce.product(),
   nos: faker.random.number({ min: 1, max: 5 }),
-  priceForOne: faker.random.number(),
 });
 
 const addToCartMutation: string = `
@@ -16,9 +15,8 @@ const addToCartMutation: string = `
             addToCart(cart: $cart) {
             id
             email
-            productId
             nos
-            priceForOne
+            product
             }
         }
     `;

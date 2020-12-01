@@ -4,6 +4,7 @@ import { Connection } from "typeorm";
 import { User } from "../../entity/User";
 import { makeGraphQLQuery } from "../../test-utils/graphQLQuery";
 import { setUpTest } from "../../test-utils/setup";
+import faker from "faker";
 import {
   generateFakeUser,
   signUpFakeUser,
@@ -34,7 +35,10 @@ describe("Test signUp mutation", () => {
     const result = await makeGraphQLQuery({
       source: signUpMutation,
       variableValues: {
-        user: { password: "adfsfghgb", firstName: "bgbgbggnh" },
+        user: {
+          password: faker.internet.password(),
+          firstName: faker.name.firstName(),
+        },
       },
       contextValue: {
         dbConnection: testDbConnection,
@@ -49,7 +53,11 @@ describe("Test signUp mutation", () => {
     const result = await makeGraphQLQuery({
       source: signUpMutation,
       variableValues: {
-        user: { password: "assaasda", email: "asidfn", firstName: "adsfad" },
+        user: {
+          password: faker.internet.password(),
+          email: "asidfn",
+          firstName: faker.name.firstName(),
+        },
       },
       contextValue: {
         dbConnection: testDbConnection,
@@ -70,7 +78,11 @@ describe("Test signUp mutation", () => {
     const result = await makeGraphQLQuery({
       source: signUpMutation,
       variableValues: {
-        user: { password: "adf", email: "abc@a.com", firstName: "bgbgbggnh" },
+        user: {
+          password: "adf",
+          email: faker.internet.email(),
+          firstName: faker.name.firstName(),
+        },
       },
       contextValue: {
         dbConnection: testDbConnection,

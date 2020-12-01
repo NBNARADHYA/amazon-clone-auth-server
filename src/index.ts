@@ -24,7 +24,7 @@ import cors from "cors";
     app.use(
       cors({
         credentials: true,
-        origin: "http://localhost:3000",
+        origin: `${process.env.CLIENT_HOST}`,
       })
     );
     app.use(cookieParser());
@@ -36,10 +36,13 @@ import cors from "cors";
 
     const PORT = process.env.PORT || 5000;
 
-    app.listen(PORT, () =>
-      console.log(
-        `Server started at http://localhost:${PORT}${apolloServer.graphqlPath}`
-      )
+    app.listen(
+      PORT,
+      () =>
+        process.env.NODE_ENV === "development" &&
+        console.log(
+          `Server started at http://localhost:${PORT}${apolloServer.graphqlPath}`
+        )
     );
   } catch (error) {
     throw new Error(error);

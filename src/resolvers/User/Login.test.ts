@@ -77,7 +77,7 @@ describe("Test login mutation", () => {
     expect(result).toMatchObject({
       errors: [
         expect.objectContaining({
-          message: "INVALID_USER",
+          message: "Invalid User",
           locations: expect.any(Array),
           path: ["login"],
         }),
@@ -102,7 +102,7 @@ describe("Test login mutation", () => {
     expect(result).toMatchObject({
       errors: [
         expect.objectContaining({
-          message: "INVALID_PASSWORD",
+          message: "Invalid Password",
           locations: expect.any(Array),
           path: ["login"],
         }),
