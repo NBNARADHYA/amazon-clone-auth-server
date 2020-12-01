@@ -28,8 +28,4 @@ export class Cart {
   @Field(() => Int, { nullable: true, defaultValue: 1 })
   @Column()
   nos: number;
-
-  @Field()
-  @Column()
-  priceForOne: string;
 }

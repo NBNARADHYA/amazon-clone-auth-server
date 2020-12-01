@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, Float, Int, ObjectType } from "type-graphql";
 import {
   Column,
   Entity,
@@ -13,9 +13,13 @@ import { User } from "./User";
 @ObjectType()
 @Entity()
 export class Order {
-  @Field(() => ID)
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Field(() => Float)
+  @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
+  createdAt: number;
 
   @Field()
   @Column({ type: "text" })

@@ -10,7 +10,4 @@ export class ProductInput {
   @Min(1)
   @Max(5)
   nos: number;
-
-  @Field()
-  priceForOne: string;
 }

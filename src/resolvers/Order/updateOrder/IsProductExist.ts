@@ -18,7 +18,7 @@ export const IsProductExist: MiddlewareFn<Context> = async (
     .getOne();
 
   if (!order) {
-    throw new Error("INVALID_PRODUCT_ID");
+    throw new Error("Invalid product ID");
   }
   req.orderProductId = order.products[0].id;
 

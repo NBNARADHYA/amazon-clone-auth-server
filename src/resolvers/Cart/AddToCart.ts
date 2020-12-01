@@ -10,13 +10,12 @@ export class AddToCart {
   @Mutation(() => Cart)
   @UseMiddleware(IsAuth, IsProductAlreadyExist)
   async addToCart(
-    @Arg("cart") { product, priceForOne, nos }: ProductInput,
+    @Arg("cart") { product, nos }: ProductInput,
     @Ctx() { req, dbConnection }: Context
   ): Promise<Cart> {
     const cart = new Cart();
     cart.email = req.user.email;
     cart.product = product;
-    cart.priceForOne = priceForOne;
     cart.nos = nos;
 
     await dbConnection.getRepository(Cart).insert(cart);

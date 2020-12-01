@@ -1,6 +1,6 @@
 import { ApolloServer } from "apollo-server-express";
 import { Connection } from "typeorm";
-import { orderContentsLoader } from "../loaders/orderContentsLoader";
+import { orderContentsLoader } from "../resolvers/Order/loaders/orderContentsLoader";
 import { Context } from "../types/Context";
 import { buildGraphQLSchema } from "./buildGqlSchema";
 

@@ -8,6 +8,7 @@ import {
   PrimaryColumn,
 } from "typeorm";
 import { Order } from "./Order";
+import { Product } from "./Product";
 
 @ObjectType()
 @Entity()
@@ -17,13 +18,11 @@ export class OrderContent {
   @Column()
   id: string;
 
-  @Field()
+  @ManyToOne(() => Product)
+  @JoinColumn({ referencedColumnName: "id" })
+  @Field(() => Product)
   @PrimaryColumn()
-  productId: string;
-
-  @Field()
-  @Column()
-  priceForOne: string;
+  product: string;
 
   @Field(() => Int)
   @Column()

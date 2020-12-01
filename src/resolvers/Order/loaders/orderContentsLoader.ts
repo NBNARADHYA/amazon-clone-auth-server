@@ -1,7 +1,7 @@
 import DataLoader, { BatchLoadFn } from "dataloader";
 import { getConnection } from "typeorm";
-import { Order } from "../entity/Order";
-import { OrderContent } from "../entity/OrderContent";
+import { Order } from "../../../entity/Order";
+import { OrderContent } from "../../../entity/OrderContent";
 
 const orderContentsBatchLoadFunction: BatchLoadFn<
   number,
@@ -11,7 +11,10 @@ const orderContentsBatchLoadFunction: BatchLoadFn<
 
   const orders = await dbConnection
     .getRepository(Order)
-    .findByIds(ids as number[], { relations: ["products"] });
+    .createQueryBuilder("order")
+    .leftJoinAndSelect("order.products", "product")
+    .leftJoinAndSelect("product.product", "productDetails")
+    .getMany();
 
   const orderContentsMap: { [key: number]: OrderContent[] } = {};
 

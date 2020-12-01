@@ -5,10 +5,11 @@ import { OrderContent } from "../../entity/OrderContent";
 import { Context } from "../../types/Context";
 import { IsAuth } from "../middlewares/IsAuth";
 import { CreateOrderInput } from "./createOrder/CreateOrderInput";
+import { CreateOrderOutput } from "./createOrder/CreateOrderOutput";
 
 @Resolver()
 export class CreateOrder {
-  @Mutation(() => Boolean)
+  @Mutation(() => CreateOrderOutput)
   @UseMiddleware(IsAuth)
   async createOrder(
     @Arg("data")
@@ -22,7 +23,7 @@ export class CreateOrder {
       city,
     }: CreateOrderInput,
     @Ctx() { dbConnection, req }: Context
-  ): Promise<boolean> {
+  ): Promise<CreateOrderOutput> {
     const order = new Order();
     order.user = req.user;
     order.address = address;
@@ -31,14 +32,13 @@ export class CreateOrder {
     order.city = city;
     order.state = state;
 
-    await dbConnection.getRepository(Order).insert(order);
+    const result = await dbConnection.getRepository(Order).insert(order);
 
     const orderContents = products.map(
-      ({ product, nos, priceForOne }): OrderContent => {
+      ({ product, nos }): OrderContent => {
         const newProduct = new OrderContent();
-        newProduct.productId = product;
+        newProduct.product = product;
         newProduct.nos = nos;
-        newProduct.priceForOne = priceForOne;
         newProduct.order = order;
         return newProduct;
       }
@@ -54,6 +54,6 @@ export class CreateOrder {
       throw new Error(error);
     }
 
-    return true;
+    return result.raw[0];
   }
 }
