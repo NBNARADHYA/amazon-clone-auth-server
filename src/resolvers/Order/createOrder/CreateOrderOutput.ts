@@ -7,4 +7,7 @@ export class CreateOrderOutput {
 
   @Field(() => Float)
   createdAt: number;
+
+  @Field()
+  stripeId: string;
 }

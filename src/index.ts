@@ -14,6 +14,7 @@ import { createApolloServer } from "./utils/apolloServer";
 import { refreshTokenRouter } from "./routers/refreshToken";
 import { typeormConfig } from "../typeormconfig";
 import cors from "cors";
+import { stripeWebHookRouter } from "./routers/stripeWebHook";
 
 (async () => {
   try {
@@ -29,6 +30,7 @@ import cors from "cors";
     );
     app.use(cookieParser());
     app.use("/refresh_token", refreshTokenRouter);
+    app.use("/stripe", stripeWebHookRouter);
 
     const apolloServer = await createApolloServer(dbConnection);
 

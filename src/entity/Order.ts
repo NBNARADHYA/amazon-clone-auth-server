@@ -22,23 +22,30 @@ export class Order {
   createdAt: number;
 
   @Field()
-  @Column({ type: "text" })
+  @Column({ default: "PLACED" })
+  status: string;
+
+  @Column()
+  stripeId: string;
+
+  @Field()
+  @Column({ type: "text", nullable: true })
   address: string;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   country: string;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   state: string;
 
   @Field()
-  @Column()
-  pincode: string;
+  @Column({ nullable: true })
+  postalCode: string;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   city: string;
 
   @ManyToOne(() => User)

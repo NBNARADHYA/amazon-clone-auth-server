@@ -27,8 +27,16 @@ export class FetchOrders {
   async fetchOrders(@Ctx() { dbConnection, req }: Context): Promise<Order[]> {
     const user = await dbConnection
       .getRepository(User)
-      .findOne({ where: { email: req.user.email }, relations: ["orders"] });
+      .createQueryBuilder("user")
+      .leftJoinAndSelect("user.orders", "orders")
+      .where("user.email = :email", { email: req.user.email })
+      .andWhere("orders.status = :status", { status: "PAID" })
+      .getOne();
 
-    return user!.orders;
+    if (!user) {
+      return [];
+    }
+
+    return user.orders;
   }
 }
