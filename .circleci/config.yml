@@ -53,10 +53,10 @@ jobs:
 workflows:
   build:
     jobs:
-      - test
+      # - test
       - deploy:
-          requires:
-            - test
+          # requires:
+          #   - test
           filters:
             branches:
               only:

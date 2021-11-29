@@ -11,6 +11,9 @@ if (process.env.NODE_ENV === "production") {
   typeormConfig = {
     ...typeormConfig,
     url: process.env.DATABASE_URL,
+    extra: {
+      ssl: { rejectUnauthorized: false },
+    },
   };
 } else {
   typeormConfig = {
